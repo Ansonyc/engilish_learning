@@ -20,13 +20,31 @@ const BAIDU_APP_ID = '20250317002306712';
 const BAIDU_KEY = '1Ho7cPXr1mqvprhLpGnP';
 
 // API 相关函数
+// 新增获取音标的方法
+async function fetchPhonetic(word) {
+    try {
+        const response = await fetch(`http://localhost:3000/phonetic?word=${encodeURIComponent(word)}`);
+        const data = await response.json();
+        console.info(data);
+        return data.phonetic || '';
+    } catch (error) {
+        console.error('获取音标失败:', error);
+        return '';
+    }
+}
+
+// 更新 fetchWordMeaning 方法
 async function fetchWordMeaning(word) {
     try {
-        // 使用本地代理服务器进行翻译
-        const translateResponse = await fetch(`http://localhost:3000/translate?word=${encodeURIComponent(word)}`);
+        const [translateResponse, phonetic] = await Promise.all([
+            fetch(`http://localhost:3000/translate?word=${encodeURIComponent(word)}`),
+            fetchPhonetic(word)
+        ]);
+        
         const translateData = await translateResponse.json();
+        console.info(translateData);
         return { 
-            meaning: `${translateData.meaning}`,
+            meaning: `[${phonetic}]\n${translateData.meaning}`,
             audioUrl: translateData.audioUrl
         };
     } catch (error) {

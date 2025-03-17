@@ -53,6 +53,29 @@ app.get('/translate', async (req, res) => {
     }
 });
 
+// 添加获取音标的接口
+// 修改获取音标的接口
+app.get('/phonetic', async (req, res) => {
+    try {
+        const { word } = req.query;
+        if (!word) {
+            return res.status(400).json({ error: '单词不能为空' });
+        }
+        
+        const response = await axios.get(`https://dict.youdao.com/jsonapi?q=${encodeURIComponent(word)}`);
+        
+        if (response.data?.ec?.word?.[0]?.ukphone) {
+            console.info(response.data);
+            res.json({ phonetic: response.data.ec.word[0].ukphone });
+        } else {
+            res.json({ phonetic: '' });
+        }
+    } catch (error) {
+        console.error('获取音标错误:', error.response?.data || error.message);
+        res.status(500).json({ phonetic: '' });
+    }
+});
+
 app.use(express.static('.'));
 
 app.listen(3000, () => {
