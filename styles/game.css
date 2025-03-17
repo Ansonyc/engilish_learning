@@ -1,0 +1,56 @@
+#letters-container, #slots-container {
+    display: flex;
+    gap: 10px;
+}
+
+.letter {
+    width: 40px;
+    height: 40px;
+    background-color: #fff;
+    border: 2px solid #333;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    cursor: move;
+}
+
+.slot {
+    width: 40px;
+    height: 40px;
+    border: 2px dashed #666;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#give-up-btn {
+    padding: 10px 20px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+#give-up-btn:hover {
+    background-color: #d32f2f;
+}
+
+.play-sound-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    color: #4CAF50;
+    font-size: 20px;
+}
+
+.play-sound-btn:hover {
+    color: #45a049;
+}

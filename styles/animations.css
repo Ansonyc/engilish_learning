@@ -1,0 +1,62 @@
+.success-firework {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+.failure-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0);
+    transition: background-color 1s;
+    pointer-events: none;
+    z-index: 999;
+}
+
+.result-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px 40px;
+    border-radius: 10px;
+    font-size: 24px;
+    opacity: 0;
+    transition: opacity 0.5s;
+    z-index: 1001;
+    text-align: center;
+}
+
+.success-message {
+    background-color: #4CAF50;
+    color: white;
+    box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
+}
+
+.failure-message {
+    background-color: #f44336;
+    color: white;
+    box-shadow: 0 0 20px rgba(244, 67, 54, 0.5);
+}
+
+.confirm-button {
+    display: block;
+    margin: 15px auto 0;
+    padding: 8px 20px;
+    background-color: white;
+    color: #f44336;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.confirm-button:hover {
+    background-color: #eeeeee;
+}

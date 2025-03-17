@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>单词拼写游戏</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/game.css">
+    <link rel="stylesheet" href="styles/modal.css">
+    <link rel="stylesheet" href="styles/animations.css">
+</head>
+<body>
+    <button id="settings-btn">设置</button>
+    <div id="game-container">
+        <div id="word-hint"></div>
+        <div id="letters-container"></div>
+        <div id="slots-container"></div>
+        <button id="give-up-btn" onclick="giveUp()">我不会</button>
+    </div>
+    
+    <div id="modal-backdrop"></div>
+    <div id="settings-modal">
+        <h3>词库设置</h3>
+        <textarea id="words-input" placeholder="每行输入一个单词"></textarea>
+        <div class="modal-buttons">
+            <button id="cancel-btn">取消</button>
+            <button id="save-btn">保存</button>
+        </div>
+    </div>
+
+    <div id="failure-overlay" class="failure-overlay"></div>
+    <div id="result-message" class="result-message"></div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
