@@ -19,33 +19,18 @@ if (localStorage.getItem('wordList')) {
 const BAIDU_APP_ID = '20250317002306712';
 const BAIDU_KEY = '1Ho7cPXr1mqvprhLpGnP';
 
-// API 相关函数
-// 新增获取音标的方法
-async function fetchPhonetic(word) {
-    try {
-        const response = await fetch(`http://localhost:3000/phonetic?word=${encodeURIComponent(word)}`);
-        const data = await response.json();
-        console.info(data);
-        return data.phonetic || '';
-    } catch (error) {
-        console.error('获取音标失败:', error);
-        return '';
-    }
-}
 
 // 更新 fetchWordMeaning 方法
 async function fetchWordMeaning(word) {
     try {
-        const [translateResponse, phonetic] = await Promise.all([
-            fetch(`http://localhost:3000/translate?word=${encodeURIComponent(word)}`),
-            fetchPhonetic(word)
-        ]);
-        
-        const translateData = await translateResponse.json();
-        console.info(translateData);
+        const youdao = await fetch(`http://localhost:3000/phonetic?word=${encodeURIComponent(word)}`)
+
+        // const translateData = await translateResponse.json();
+        const youdaoData = await youdao.json();
+        https://fanyi.baidu.com/gettts?lan=en&text=${encodeURIComponent(word)}&spd=3&source=web
         return { 
-            meaning: `[${phonetic}]\n${translateData.meaning}`,
-            audioUrl: translateData.audioUrl
+            meaning: `[${youdaoData.phonetic}]\n${youdaoData.translation}`,
+            audioUrl: `https://fanyi.baidu.com/gettts?lan=en&text=${encodeURIComponent(word)}&spd=3&source=web`
         };
     } catch (error) {
         console.error('获取释义失败:', error);
