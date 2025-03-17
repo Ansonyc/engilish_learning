@@ -1,5 +1,5 @@
 // 配置
-const TOTAL_ROUNDS = 5;
+const TOTAL_ROUNDS = 20;
 let words = ['hello', 'world', 'javascript', 'programming', 'computer'];
 let currentWord = '';
 let testedWords = new Set();
@@ -15,47 +15,19 @@ if (localStorage.getItem('wordList')) {
     words = JSON.parse(localStorage.getItem('wordList'));
 }
 
+// 百度翻译 API 配置
+const BAIDU_APP_ID = '20250317002306712';
+const BAIDU_KEY = '1Ho7cPXr1mqvprhLpGnP';
+
 // API 相关函数
 async function fetchWordMeaning(word) {
     try {
-        const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
-        
-        if (!response.ok) {
-            return { meaning: '暂无释义', audioUrl: null };
-        }
-        
-        const data = await response.json();
-        
-        if (!data || !Array.isArray(data) || data.length === 0 || !data[0].meanings) {
-            return { meaning: '暂无释义', audioUrl: null };
-        }
-        
-        const audioUrl = data[0].phonetics?.find(p => p.audio)?.audio || null;
-        const rawPhonetic = data[0].phonetic || 
-                           data[0].phonetics?.find(p => p.text)?.text ||
-                           '暂无音标';
-        
-        const phonetic = rawPhonetic.replace(/^[a-zA-Z\s]+/, '').trim();
-        const meanings = data[0].meanings
-            .map(m => m.definitions[0]?.definition || '')
-            .filter(def => def)
-            .slice(0, 2)
-            .join('; ');
-            
-        if (!meanings) {
-            return { meaning: `${phonetic}`, audioUrl };
-        }
-        
-        const translateResponse = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(meanings)}&langpair=en|zh`);
+        // 使用本地代理服务器进行翻译
+        const translateResponse = await fetch(`http://localhost:3000/translate?word=${encodeURIComponent(word)}`);
         const translateData = await translateResponse.json();
-        
-        if (!translateData?.responseData?.translatedText) {
-            return { meaning: `${phonetic}\n翻译失败`, audioUrl };
-        }
-        
         return { 
-            meaning: `${phonetic}\n${translateData.responseData.translatedText}`,
-            audioUrl
+            meaning: `${translateData.meaning}`,
+            audioUrl: translateData.audioUrl
         };
     } catch (error) {
         console.error('获取释义失败:', error);
