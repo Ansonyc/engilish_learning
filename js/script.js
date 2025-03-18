@@ -402,6 +402,47 @@ function restartGame() {
 
 // 页面加载完成后初始化游戏
 document.addEventListener('DOMContentLoaded', () => {
+    // 设置按钮相关
+    const settingsBtn = document.getElementById('settings-btn');
+    const settingsModal = document.getElementById('settings-modal');
+    const modalBackdrop = document.getElementById('modal-backdrop');
+    const cancelBtn = document.getElementById('cancel-btn');
+    const saveBtn = document.getElementById('save-btn');
+    const wordsInput = document.getElementById('words-input');
+
+    // 显示设置面板
+    settingsBtn.addEventListener('click', () => {
+        settingsModal.style.display = 'block';
+        modalBackdrop.style.display = 'block';
+        wordsInput.value = words.join('\n');
+    });
+
+    // 关闭设置面板
+    cancelBtn.addEventListener('click', () => {
+        settingsModal.style.display = 'none';
+        modalBackdrop.style.display = 'none';
+    });
+
+    // 保存设置
+    saveBtn.addEventListener('click', () => {
+        const newWords = wordsInput.value.split('\n')
+            .map(word => word.trim())
+            .filter(word => word.length > 0);
+        
+        if (newWords.length > 0) {
+            words = newWords;
+            localStorage.setItem('wordList', JSON.stringify(words));
+            testedWords.clear();
+            currentResults = [];
+            audioUrls = {};
+            createGame().catch(error => console.error('游戏初始化失败:', error));
+        }
+        
+        settingsModal.style.display = 'none';
+        modalBackdrop.style.display = 'none';
+    });
+
+    // 初始化游戏
     createGame().catch(error => {
         console.error('游戏初始化失败:', error);
         document.getElementById('word-hint').textContent = '游戏加载失败，请刷新页面重试';
