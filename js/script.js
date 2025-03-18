@@ -1,6 +1,16 @@
 // 配置
 const TOTAL_ROUNDS = 20;
-let words = ['hello', 'world', 'javascript', 'programming', 'computer'];
+let words = [
+    'once', 'upon', 'time', 'bear', 'long', 'thick', 'tail', 'other', 'animal', 
+    'trip', 'over', 'walk', 'tickle', 'nose', 'sleep', 'little', 'would', 
+    'even', 'ride', 'fair', 'better', 'than', 'mine', 'thought', 'fox', 
+    'decide', 'trick', 'him', 'creep', 'fisherman', 'take', 'few', 'carry', 
+    'lake', 'smell', 'them', 'came', 'closer', 'those', 'look', 'delicious', 
+    'said', 'say', 'show', 'how', 'catch', 'told', 'tell', 'bite', 'pull', 
+    'wait', 'become', 'grew', 'grow', 'cold', 'begin', 'began', 'snow', 'next', 
+    'still', 'shout', 'huge', 'heap', 'jump', 'frozen', 'freeze', 'break', 
+    'broke', 'sorry', 'cry', 'happen', 'new', 'short', 'smile', 'pad'
+];
 let currentWord = '';
 let testedWords = new Set();
 let currentResults = [];
@@ -23,19 +33,40 @@ const BAIDU_KEY = '1Ho7cPXr1mqvprhLpGnP';
 // 更新 fetchWordMeaning 方法
 async function fetchWordMeaning(word) {
     try {
-        const youdao = await fetch(`http://localhost:3000/phonetic?word=${encodeURIComponent(word)}`)
-
-        // const translateData = await translateResponse.json();
+        const youdao = await fetch(`http://192.168.1.2:3000/phonetic?word=${encodeURIComponent(word)}`)
         const youdaoData = await youdao.json();
-        https://fanyi.baidu.com/gettts?lan=en&text=${encodeURIComponent(word)}&spd=3&source=web
+        
+        // 使用 mp3 格式的音频，对移动设备更友好
         return { 
             meaning: `[${youdaoData.phonetic}]\n${youdaoData.translation}`,
-            audioUrl: `https://fanyi.baidu.com/gettts?lan=en&text=${encodeURIComponent(word)}&spd=3&source=web`
+            audioUrl: `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(word)}&type=1`
         };
     } catch (error) {
         console.error('获取释义失败:', error);
-        return { meaning: '获取释义失败', audioUrl: null };
+        return { 
+            meaning: '获取释义失败', 
+            // 即使获取释义失败，也提供音频 URL
+            audioUrl: `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(word)}&type=1`
+        };
     }
+}
+
+function playWordSound(audioUrl) {
+    if (!audioUrl) return;
+    
+    // 预加载音频
+    const audio = new Audio();
+    
+    // 添加事件监听器
+    audio.addEventListener('canplaythrough', () => {
+        // 在 iOS 上需要用户交互才能播放
+        audio.play().catch(error => {
+            console.error('播放音频失败:', error);
+        });
+    });
+    
+    // 设置音频源
+    audio.src = audioUrl;
 }
 
 // 音频播放
@@ -310,10 +341,10 @@ async function createGame() {
     }
     
     wordHint.innerHTML = `
-        <div style="text-align: center;">
+        <div style="text-align: center; max-width: 75%; margin: 0 auto;">
             <div style="margin-bottom: 10px; color: #666;">第 ${testedWords.size} / ${TOTAL_ROUNDS} 轮</div>
             <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
-                <span>提示：${meaning}</span>
+                <span style="word-break: break-all;">提示：${meaning}</span>
                 ${audioUrl ? `<button class="play-sound-btn" onclick="playWordSound('${audioUrl}')">🔊</button>` : ''}
             </div>
         </div>
