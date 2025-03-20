@@ -295,25 +295,45 @@ function handleConfirm() {
 }
 
 function giveUp() {
-    const lettersContainer = document.getElementById('letters-container');
-    const slots = document.querySelectorAll('.slot');
+    // 获取按钮元素
+    const giveUpBtn = document.getElementById('give-up-btn');
     
-    slots.forEach(slot => {
-        if (slot.hasChildNodes()) {
-            lettersContainer.appendChild(slot.firstChild);
-        }
-    });
+    // 获取可视区域的尺寸
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
     
-    currentWord.split('').forEach((letter, index) => {
-        const letterDiv = document.createElement('div');
-        letterDiv.className = 'letter';
-        letterDiv.textContent = letter;
-        letterDiv.draggable = true;
-        letterDiv.addEventListener('dragstart', handleDragStart);
-        slots[index].appendChild(letterDiv);
-    });
+    // 按钮的尺寸
+    const btnRect = giveUpBtn.getBoundingClientRect();
     
-    showResult(false, '很遗憾，正确答案是：' + currentWord);
+    // 随机生成新位置（保持在可视区域内）
+    const newX = Math.random() * (viewportWidth - btnRect.width);
+    const newY = Math.random() * (viewportHeight - btnRect.height);
+    
+    // 设置新位置
+    giveUpBtn.style.position = 'fixed';
+    giveUpBtn.style.left = `${newX}px`;
+    giveUpBtn.style.top = `${newY}px`;
+    
+    // // 原有的放弃逻辑
+    // const lettersContainer = document.getElementById('letters-container');
+    // const slots = document.querySelectorAll('.slot');
+    
+    // slots.forEach(slot => {
+    //     if (slot.hasChildNodes()) {
+    //         lettersContainer.appendChild(slot.firstChild);
+    //     }
+    // });
+    
+    // currentWord.split('').forEach((letter, index) => {
+    //     const letterDiv = document.createElement('div');
+    //     letterDiv.className = 'letter';
+    //     letterDiv.textContent = letter;
+    //     letterDiv.draggable = true;
+    //     letterDiv.addEventListener('dragstart', handleDragStart);
+    //     slots[index].appendChild(letterDiv);
+    // });
+    
+    // showResult(false, '很遗憾，正确答案是：' + currentWord);
 }
 
 async function createGame() {
@@ -371,6 +391,11 @@ async function createGame() {
         slot.addEventListener('drop', handleDrop);
         slotsContainer.appendChild(slot);
     });
+    
+    // 在 createGame 函数中添加按钮样式重置
+    const giveUpBtn = document.getElementById('give-up-btn');
+    giveUpBtn.style.position = 'static';  // 重置按钮位置
+    
 }
 
 function showFinalResults() {
@@ -426,12 +451,36 @@ function restartGame() {
         <div id="word-hint"></div>
         <div id="letters-container"></div>
         <div id="slots-container"></div>
-        <button id="give-up-btn" onclick="giveUp()">我不会</button>
+        <button id="give-up-btn">我不会</button>
     `;
+    
+    // 添加触摸和鼠标事件监听
+    const giveUpBtn = document.getElementById('give-up-btn');
+    giveUpBtn.addEventListener('touchstart', moveButton, { passive: false });
+    giveUpBtn.addEventListener('mousedown', moveButton);
+    
     createGame().catch(error => console.error('游戏初始化失败:', error));
 }
 
-// 页面加载完成后初始化游戏
+function moveButton(e) {
+    e.preventDefault(); // 阻止默认行为
+    
+    const giveUpBtn = e.target;
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    const btnRect = giveUpBtn.getBoundingClientRect();
+    
+    // 随机生成新位置（保持在可视区域内）
+    const newX = Math.random() * (viewportWidth - btnRect.width);
+    const newY = Math.random() * (viewportHeight - btnRect.height);
+    
+    // 设置新位置
+    giveUpBtn.style.position = 'fixed';
+    giveUpBtn.style.left = `${newX}px`;
+    giveUpBtn.style.top = `${newY}px`;
+}
+
+// 在页面加载完成后的初始化代码中也添加事件监听
 document.addEventListener('DOMContentLoaded', () => {
     // 设置按钮相关
     const settingsBtn = document.getElementById('settings-btn');
@@ -479,3 +528,5 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('word-hint').textContent = '游戏加载失败，请刷新页面重试';
     });
 });
+
+// 移除原有的 giveUp 函数，因为我们不再需要它了
