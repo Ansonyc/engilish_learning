@@ -113,60 +113,43 @@
     overflow: hidden;
     display: flex;
     width: 100%;
-    height: auto; /* 改为自动高度 */
-    aspect-ratio: 1280 / 854; /* 根据两张图片总宽高设置 (640*2)x854 */
+    height: auto;
+    aspect-ratio: 1280 / 854;
     margin-bottom: 20px;
     gap: 0;
 }
 
-.character-image, .background-image {
-    flex: 1 1 50%;
-    width: 50%; /* 强制等分宽度 */
-    height: 100%;
-    object-fit: contain; /* 完整显示图片 */
-    border-radius: 0;
-    padding: 0;
-    margin: 0;
-    min-width: 0;
-}
-
-.close-btn {
-    display: block;
-    margin: 0 auto;
-    padding: 10px 30px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-
-.info-overlay {
-    /* 添加重要样式覆盖 */
-    .image-container {
-        position: relative !important; /* 确保相对定位 */
-    }
-    
-    .character-image {
-        width: 50% !important; /* 强制左侧50%宽度 */
-        height: 100% !important;
-    }
-    
-    .info-overlay {
-        width: 50% !important; /* 强制右侧50%宽度 */
-        height: 100% !important;
-        position: absolute;
-        right: 0;
-        top: 0;
-    }
-    position: relative;
+.character-image {
+    flex: 1;
     width: 50%;
     height: 100%;
+    object-fit: contain;
+}
+
+.background-container {
+    position: relative;
+    flex: 1;
+    width: 50%;
+    height: 100%;
+}
+
+.background-image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.info-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     padding: 20px;
-    background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9));
-    overflow: hidden;
+    background: rgba(255, 255, 255, 0.9);
+    overflow-y: auto;
+    z-index: 1;
 }
 
 .scroll-content {

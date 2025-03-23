@@ -7,15 +7,24 @@ const CHARACTER_IMAGES = [
 async function showCelebration() {
     const modal = document.getElementById('celebration-modal');
     const characterImg = document.getElementById('character-image');
+    const backgroundImg = document.getElementById('background-image');
     
     const randomIndex = Math.floor(Math.random() * CHARACTER_IMAGES.length);
     characterImg.src = `resources/人物/${CHARACTER_IMAGES[randomIndex]}`;
+    backgroundImg.src = 'resources/background.jpg';
 
     try {
-        await new Promise((resolve, reject) => {
-            characterImg.onload = resolve;
-            characterImg.onerror = reject;
-        });
+        // 等待两张图片都加载完成
+        await Promise.all([
+            new Promise((resolve, reject) => {
+                characterImg.onload = resolve;
+                characterImg.onerror = reject;
+            }),
+            new Promise((resolve, reject) => {
+                backgroundImg.onload = resolve;
+                backgroundImg.onerror = reject;
+            })
+        ]);
 
         const currentImageName = CHARACTER_IMAGES[randomIndex].replace(/\.[^/.]+$/, "");
         const charInfo = people_descriptions.find(c => c.name === currentImageName);
