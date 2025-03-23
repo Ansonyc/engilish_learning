@@ -34,5 +34,25 @@
 
     <!-- 只保留这一个 script 标签 -->
     <script src="js/script.js"></script>
+    <!-- 在body末尾添加 -->
+    <!-- 修改后的弹窗结构 -->
+    <div id="celebration-modal" class="celebration-modal">
+        <div class="modal-content">
+            <!-- 修正后的图片容器结构 -->
+            <div class="image-container">
+                <img id="character-image" class="character-image">
+                <div class="info-overlay"> <!-- 确保这是唯一的右侧容器 -->
+                    <h2 id="char-name"></h2>
+                    <h3 id="char-subname"></h3>
+                    <p id="char-brief"></p>
+                    <div class="scroll-content">
+                        <p id="char-story"></p>
+                        <p id="char-history"></p>
+                    </div>
+                </div>
+            </div>
+            <button onclick="closeCelebration()" class="close-btn">关闭</button>
+        </div>
+    </div>
 </body>
 </html>
