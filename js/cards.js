@@ -1,12 +1,7 @@
-// 人物图片列表
-const CHARACTER_IMAGES = [
-    '張郃.png',
-];
-
 let people_descriptions = [
-    ["夏侯惇","［元譲］","曹操的重臣。西漢夏侯嬰的後裔。","曹操舉兵以來，經常隨軍出戰。在董卓追擊戰時，救出了敗給徐榮的曹操，並刺殺了徐榮。和呂布交戰時，左眼中了曹性一箭，但依舊奮勇斬殺曹性。在劉備登庸諸葛亮時，前去侵攻新野，但中了諸葛亮的火攻而大敗。當耿紀和韋晃在許都對曹操發動叛變時前往鎮壓。與劉備軍進行漢中攻防戰時，詢問楊脩曹操隨口說出的「雞肋」一詞為何意，並進行撤退的指揮。曹操死後沒多久，也跟著病死。","失去左眼又被稱為盲夏侯。在曹丕時代被封為大將軍。"]
-    ["曹操","［孟德］","宦官曹騰之孫，曹嵩之子。魏武帝。幼名為阿瞞。","被許劭評為「治世之能臣，亂世之奸雄」。在討伐黃巾黨時十分活躍，當董卓掌握實權時，呼籲各地諸侯舉兵響應打倒董卓。之後，平定兗州並收編青州兵，將獻帝迎至許昌而掌握政權。擊敗呂布、袁術等人，在官渡之戰時擊破袁紹並支配河北。接著雖攻下劉琮逼近江東，卻在赤壁之戰敗給了孫權和劉備的聯軍，失去了統一全土的機會。之後致力於平定關中以西之地。213年為魏公，216年為魏王。","政戰兩方都非常優秀，並且是精通詩歌文學的萬能英雄。"]
-    ["夏侯淵","［妙才］","曹操的重臣。夏侯惇的堂弟。夏侯霸、威、惠、和之父。","連同夏侯惇在曹操舉兵時從軍。銅雀台落成時展現曹操軍第一弓術，在渭水一戰中射殺成宜。在擊退馬超後，毛遂自薦同張既共守長安，並平定涼州。張魯討伐戰中同張郃擔任先鋒，在壓制漢中後守衛定軍山。漢中受到劉備攻打時，雖收到曹操「對妙才（夏侯淵的字）有所期待」警惕切莫過於急躁所寫的一封信，卻還是因對山被劉備軍奪走而焦躁，在急著出征後被黃忠所殺。","官渡之戰時負責確保兵糧。善於奇襲。"]
+    ["夏侯惇","［元譲］","曹操的重臣。西漢夏侯嬰的後裔。","曹操舉兵以來，經常隨軍出戰。在董卓追擊戰時，救出了敗給徐榮的曹操，並刺殺了徐榮。和呂布交戰時，左眼中了曹性一箭，但依舊奮勇斬殺曹性。在劉備登庸諸葛亮時，前去侵攻新野，但中了諸葛亮的火攻而大敗。當耿紀和韋晃在許都對曹操發動叛變時前往鎮壓。與劉備軍進行漢中攻防戰時，詢問楊脩曹操隨口說出的「雞肋」一詞為何意，並進行撤退的指揮。曹操死後沒多久，也跟著病死。","失去左眼又被稱為盲夏侯。在曹丕時代被封為大將軍。"],
+    ["曹操","［孟德］","宦官曹騰之孫，曹嵩之子。魏武帝。幼名為阿瞞。","被許劭評為「治世之能臣，亂世之奸雄」。在討伐黃巾黨時十分活躍，當董卓掌握實權時，呼籲各地諸侯舉兵響應打倒董卓。之後，平定兗州並收編青州兵，將獻帝迎至許昌而掌握政權。擊敗呂布、袁術等人，在官渡之戰時擊破袁紹並支配河北。接著雖攻下劉琮逼近江東，卻在赤壁之戰敗給了孫權和劉備的聯軍，失去了統一全土的機會。之後致力於平定關中以西之地。213年為魏公，216年為魏王。","政戰兩方都非常優秀，並且是精通詩歌文學的萬能英雄。"],
+    ["夏侯淵","［妙才］","曹操的重臣。夏侯惇的堂弟。夏侯霸、威、惠、和之父。","連同夏侯惇在曹操舉兵時從軍。銅雀台落成時展現曹操軍第一弓術，在渭水一戰中射殺成宜。在擊退馬超後，毛遂自薦同張既共守長安，並平定涼州。張魯討伐戰中同張郃擔任先鋒，在壓制漢中後守衛定軍山。漢中受到劉備攻打時，雖收到曹操「對妙才（夏侯淵的字）有所期待」警惕切莫過於急躁所寫的一封信，卻還是因對山被劉備軍奪走而焦躁，在急著出征後被黃忠所殺。","官渡之戰時負責確保兵糧。善於奇襲。"],
     ["郭嘉","［奉孝］","曹操的參謀。郭奕父親。","在程昱的推薦之下仕官於曹操，他則是推薦了劉曄。在劉備前來投靠曹操時，面對荀彧與程昱進言應該要斬殺劉備，他提出斬殺劉備將失去人心的反論。官渡之戰前夕，向曹操解說能勝過袁紹的十個勝因。所以比起袁紹，更該優先去討伐呂布。之後正確地預言孫策會早死、袁家會滅亡。但是在討伐袁尚的途中病死。曹操在赤壁敗北後，大嘆「郭奉孝在，不使孤至此」。","受荀彧推薦成為謀臣戲志才的後繼者。"],
     ["徐晃","［公明］","魏國武將。操使大斧的能手。","曾經是楊奉的部下，被滿寵說服轉而為曹操效命。在呂布討伐戰時虜獲陳宮。雖在官渡之戰敗給顏良、文醜，但因突擊烏巢而助其獲勝。之後也參戰赤壁、渭水、漢中等地，在關羽包圍樊城時迎擊阻止前進。此後孟達順應諸葛亮北伐而叛亂，同司馬懿前往鎮壓時，卻身中孟達的箭而亡。","迎戰關羽後，見其一絲不亂地率兵的曹操讚為「有西漢名將周亞夫風範」。"],
     ["張遼","［文遠］","呂布之武將。後仕於曹操。張虎之父。","於呂布敗亡下邳時被捕，因劉備及關羽之建議而受曹操任用。於曹操軍將關羽包圍於下邳時說服其投降。官渡之戰後負責指揮討伐烏丸、於白狼山討伐蹋頓。赤壁之戰後進入合淝，防守魏吳國境。215年，與李典、樂進共同於逍遙津大敗孫權軍，據傳可使哭泣中之孩童，僅聞其名則立即安靜無聲。224年，追隨曹丕進攻吳國之時，身中丁奉之箭，不久後因箭傷而亡。","222年，與曹休共同擊敗吳國之呂範，病亡。"],
@@ -36,16 +31,19 @@ let people_descriptions = [
     ["法正","［孝直］","劉璋之幕僚。後仕於劉備。","與張松、孟達等人不看好劉璋，策劃將益州委託於劉備。與龐統共同擔任劉備之益州平定戰之參謀。劉備平定益州後成為蜀郡太守。與曹操之漢中攻防戰中亦以參謀之身分表現卓越。傳授黃忠計略，繼而討伐夏侯淵。對其智謀，諸葛亮亦予以頗高評價，於劉備強行對夷陵出兵時，諸葛亮感嘆「若法正仍然在世，或許就不需出兵了吧」。","雖有小仇必報等缺點，但因其智謀受賞識，而為諸葛亮所容忍。"],        
 ]
 
-// 展示庆祝弹窗
+// 展示慶祝彈窗
 async function showCelebration() {
     const modal = document.getElementById('celebration-modal');
     const characterImg = document.getElementById('character-image');
-    const characterBgImg = document.getElementById('character-background-image');
     const backgroundImg = document.getElementById('background-image');
     
-    const randomIndex = Math.floor(Math.random() * CHARACTER_IMAGES.length);
-    characterImg.src = `resources/人物/${CHARACTER_IMAGES[randomIndex]}`;
-    characterBgImg.src = 'resources/background.jpg';
+    // 随机选择一个人物信息
+    const randomIndex = Math.floor(Math.random() * people_descriptions.length);
+    const selectedPerson = people_descriptions[randomIndex];
+    console.log(selectedPerson);
+    
+    // 设置图片路径
+    characterImg.src = `resources/人物/${selectedPerson[0]}.png`;
     backgroundImg.src = 'resources/background.jpg';
 
     try {
@@ -55,30 +53,23 @@ async function showCelebration() {
                 characterImg.onerror = reject;
             }),
             new Promise((resolve, reject) => {
-                characterBgImg.onload = resolve;
-                characterBgImg.onerror = reject;
-            }),
-            new Promise((resolve, reject) => {
                 backgroundImg.onload = resolve;
                 backgroundImg.onerror = reject;
             })
         ]);
 
-        const currentImageName = CHARACTER_IMAGES[randomIndex].replace(/\.[^/.]+$/, "");
-        const charInfo = people_descriptions.find(c => c.name === currentImageName);
+        // 设置人物信息
+        document.getElementById('char-name').textContent = selectedPerson[0] || '';
+        document.getElementById('char-subname').textContent = selectedPerson[1] || '';
+        document.getElementById('char-brief').textContent = selectedPerson[2] || '';
         
-        if (charInfo) {
-            document.getElementById('char-name').textContent = charInfo.name || '';
-            document.getElementById('char-subname').textContent = charInfo.sub_name || '';
-            document.getElementById('char-brief').textContent = charInfo.brief || '';
-            
-            document.getElementById('char-story').innerHTML = `
-                <span class="story-bg">演</span>${charInfo.story || '暂无数据'}
-            `;
-            document.getElementById('char-history').innerHTML = `
-                <span class="history-bg">史</span>${charInfo.history || '暂无数据'}
-            `;
-        }
+        document.getElementById('char-story').innerHTML = `
+            <span class="story-bg">演</span>${selectedPerson[3] || '暂无数据'}
+        `;
+        document.getElementById('char-history').innerHTML = `
+            <span class="history-bg">史</span>${selectedPerson[4] || '暂无数据'}
+        `;
+        
     } catch (error) {
         console.error('加载人物信息失败:', error);
     }
@@ -86,7 +77,7 @@ async function showCelebration() {
     modal.style.display = 'block';
 }
 
-// 关闭庆祝弹窗
+// 关闭慶祝弹窗
 function closeCelebration() {
     document.getElementById('celebration-modal').style.display = 'none';
 }

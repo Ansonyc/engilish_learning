@@ -337,6 +337,8 @@ function giveUp() {
 }
 
 async function createGame() {
+    console.info('createGame called');
+    console.info(testedWords)
     if (testedWords.size >= TOTAL_ROUNDS) {
         showFinalResults();
         return;
@@ -399,6 +401,91 @@ async function createGame() {
 }
 
 // 在showFinalResults函数中添加判断逻辑
+// 在文件开头添加
+function updateRewardsButton() {
+    const rewardedCharacters = JSON.parse(localStorage.getItem(REWARDED_CHARACTERS_KEY) || '[]');
+    const rewardsBtn = document.getElementById('rewards-btn');
+    rewardsBtn.style.display = rewardedCharacters.length > 0 ? 'block' : 'none';
+}
+
+function showRewardsModal() {
+    const rewardsModal = document.getElementById('rewards-modal');
+    const rewardsContainer = document.getElementById('rewards-container');
+    const rewardedCharacters = JSON.parse(localStorage.getItem(REWARDED_CHARACTERS_KEY) || '[]');
+    
+    rewardsContainer.innerHTML = '';
+    rewardedCharacters.forEach(characterName => {
+        const character = people_descriptions.find(p => p[0] === characterName);
+        if (character) {
+            const div = document.createElement('div');
+            div.className = 'reward-item';
+            div.innerHTML = `
+                <img src="resources/人物/${character[0]}.png" alt="${character[0]}">
+                <div class="name">${character[0]}</div>
+            `;
+            rewardsContainer.appendChild(div);
+        }
+    });
+    
+    rewardsModal.style.display = 'block';
+}
+
+function closeRewardsModal() {
+    document.getElementById('rewards-modal').style.display = 'none';
+}
+
+// 在 DOMContentLoaded 事件监听器中添加
+document.addEventListener('DOMContentLoaded', () => {
+    // 设置按钮相关
+    const settingsBtn = document.getElementById('settings-btn');
+    const settingsModal = document.getElementById('settings-modal');
+    const modalBackdrop = document.getElementById('modal-backdrop');
+    const cancelBtn = document.getElementById('cancel-btn');
+    const saveBtn = document.getElementById('save-btn');
+    const wordsInput = document.getElementById('words-input');
+
+    // 显示设置面板
+    settingsBtn.addEventListener('click', () => {
+        settingsModal.style.display = 'block';
+        modalBackdrop.style.display = 'block';
+        wordsInput.value = words.join('\n');
+    });
+
+    // 关闭设置面板
+    cancelBtn.addEventListener('click', () => {
+        settingsModal.style.display = 'none';
+        modalBackdrop.style.display = 'none';
+    });
+
+    // 保存设置
+    saveBtn.addEventListener('click', () => {
+        const newWords = wordsInput.value.split('\n')
+            .map(word => word.trim())
+            .filter(word => word.length > 0);
+        
+        if (newWords.length > 0) {
+            words = newWords;
+            localStorage.setItem('wordList', JSON.stringify(words));
+            testedWords.clear();
+            currentResults = [];
+            audioUrls = {};
+            console.info('Words updated:', words);
+            createGame().catch(error => console.error('游戏初始化失败:', error));
+        }
+        
+        settingsModal.style.display = 'none';
+        modalBackdrop.style.display = 'none';
+    });
+
+    console.info('DOMContentLoaded event fired');
+    // 初始化游戏
+    createGame().catch(error => {
+        console.error('游戏初始化失败:', error);
+        document.getElementById('word-hint').textContent = '游戏加载失败，请刷新页面重试';
+    });
+});
+
+// 移除原有的 giveUp 函数，因为我们不再需要它了
 function showFinalResults() {
     const gameContainer = document.getElementById('game-container');
     const allWords = Array.from(testedWords);
@@ -446,7 +533,27 @@ function showFinalResults() {
     const allCorrect = currentResults.every(r => r.success) && currentResults.length === TOTAL_ROUNDS;
     
     if (allCorrect) {
-        showCelebration();
+        // 获取已奖励的角色
+        const rewardedCharacters = JSON.parse(localStorage.getItem(REWARDED_CHARACTERS_KEY) || '[]');
+        
+        // 过滤掉已奖励的角色
+        const availableCharacters = people_descriptions.filter(person => 
+            !rewardedCharacters.includes(person[0])
+        );
+
+        if (availableCharacters.length > 0) {
+            // 记录新奖励的角色
+            const selectedPerson = availableCharacters[Math.floor(Math.random() * availableCharacters.length)];
+            rewardedCharacters.push(selectedPerson[0]);
+            localStorage.setItem(REWARDED_CHARACTERS_KEY, JSON.stringify(rewardedCharacters));
+            
+            // 更新奖励按钮显示状态
+            updateRewardsButton();
+            
+            showCelebration();
+        } else {
+            alert('恭喜你！你已经收集了所有角色！');
+        }
     }
 }
 
@@ -466,7 +573,7 @@ function restartGame() {
     const giveUpBtn = document.getElementById('give-up-btn');
     giveUpBtn.addEventListener('touchstart', moveButton, { passive: false });
     giveUpBtn.addEventListener('mousedown', moveButton);
-    
+    console.info('restartGame called');
     createGame().catch(error => console.error('游戏初始化失败:', error));
 }
 
@@ -487,54 +594,3 @@ function moveButton(e) {
     giveUpBtn.style.left = `${newX}px`;
     giveUpBtn.style.top = `${newY}px`;
 }
-
-// 在页面加载完成后的初始化代码中也添加事件监听
-document.addEventListener('DOMContentLoaded', () => {
-    // 设置按钮相关
-    const settingsBtn = document.getElementById('settings-btn');
-    const settingsModal = document.getElementById('settings-modal');
-    const modalBackdrop = document.getElementById('modal-backdrop');
-    const cancelBtn = document.getElementById('cancel-btn');
-    const saveBtn = document.getElementById('save-btn');
-    const wordsInput = document.getElementById('words-input');
-
-    // 显示设置面板
-    settingsBtn.addEventListener('click', () => {
-        settingsModal.style.display = 'block';
-        modalBackdrop.style.display = 'block';
-        wordsInput.value = words.join('\n');
-    });
-
-    // 关闭设置面板
-    cancelBtn.addEventListener('click', () => {
-        settingsModal.style.display = 'none';
-        modalBackdrop.style.display = 'none';
-    });
-
-    // 保存设置
-    saveBtn.addEventListener('click', () => {
-        const newWords = wordsInput.value.split('\n')
-            .map(word => word.trim())
-            .filter(word => word.length > 0);
-        
-        if (newWords.length > 0) {
-            words = newWords;
-            localStorage.setItem('wordList', JSON.stringify(words));
-            testedWords.clear();
-            currentResults = [];
-            audioUrls = {};
-            createGame().catch(error => console.error('游戏初始化失败:', error));
-        }
-        
-        settingsModal.style.display = 'none';
-        modalBackdrop.style.display = 'none';
-    });
-
-    // 初始化游戏
-    createGame().catch(error => {
-        console.error('游戏初始化失败:', error);
-        document.getElementById('word-hint').textContent = '游戏加载失败，请刷新页面重试';
-    });
-});
-
-// 移除原有的 giveUp 函数，因为我们不再需要它了

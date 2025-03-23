@@ -253,3 +253,33 @@
     object-fit: contain;
     z-index: 2;
 }
+
+
+.top-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.rewards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.reward-item {
+    text-align: center;
+}
+
+.reward-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.reward-item .name {
+    font-size: 16px;
+    color: #333;
+}
