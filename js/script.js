@@ -372,7 +372,8 @@ function showRewardsModal() {
     const rewardsModal = document.getElementById('rewards-modal');
     const rewardsContainer = document.getElementById('rewards-container');
     const rewardedCharacters = JSON.parse(localStorage.getItem(REWARDED_CHARACTERS_KEY) || '[]');
-    
+    console.info('showRewardsModal， rewardedCharacters : ' + rewardedCharacters)
+
     rewardsContainer.innerHTML = '';
     rewardedCharacters.forEach(characterName => {
         const character = people_descriptions.find(p => p[0] === characterName);
@@ -447,6 +448,8 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('游戏初始化失败:', error);
         document.getElementById('word-hint').textContent = '游戏加载失败，请刷新页面重试';
     });
+
+    updateRewardsButton();
 });
 
 // 移除原有的 giveUp 函数，因为我们不再需要它了
