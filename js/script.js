@@ -371,9 +371,9 @@ function updateRewardsButton() {
 function showRewardsModal() {
     const rewardsModal = document.getElementById('rewards-modal');
     const rewardsContainer = document.getElementById('rewards-container');
+    const modalBackdrop = document.getElementById('modal-backdrop');
     const rewardedCharacters = JSON.parse(localStorage.getItem(REWARDED_CHARACTERS_KEY) || '[]');
-    console.info('showRewardsModal， rewardedCharacters : ' + rewardedCharacters)
-
+    
     rewardsContainer.innerHTML = '';
     rewardedCharacters.forEach(characterName => {
         const character = people_descriptions.find(p => p[0] === characterName);
@@ -381,18 +381,32 @@ function showRewardsModal() {
             const div = document.createElement('div');
             div.className = 'reward-item';
             div.innerHTML = `
-                <img src="resources/人物/${character[0]}.png" alt="${character[0]}">
-                <div class="name">${character[0]}</div>
+                <div class="character-card">
+                    <div class="character-image">
+                        <img src="resources/人物/${character[0]}.png" alt="${character[0]}">
+                    </div>
+                    <div class="character-info">
+                        <h3 class="name">${character[0]}</h3>
+                        <div class="title">${character[1]}</div>
+                        <div class="description">${character[2]}</div>
+                        <div class="story">${character[3]}</div>
+                        <div class="history">${character[4]}</div>
+                    </div>
+                </div>
             `;
             rewardsContainer.appendChild(div);
         }
     });
     
+    modalBackdrop.style.display = 'block';
     rewardsModal.style.display = 'block';
 }
 
 function closeRewardsModal() {
-    document.getElementById('rewards-modal').style.display = 'none';
+    const rewardsModal = document.getElementById('rewards-modal');
+    const modalBackdrop = document.getElementById('modal-backdrop');
+    rewardsModal.style.display = 'none';
+    modalBackdrop.style.display = 'none';
 }
 
 // 在 DOMContentLoaded 事件监听器中添加
