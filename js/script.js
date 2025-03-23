@@ -407,11 +407,6 @@ async function createGame() {
     
 }
 
-// 在文件顶部常量区添加人物图片列表
-const CHARACTER_IMAGES = [
-    '張郃.png',
-];
-
 // 在showFinalResults函数中添加判断逻辑
 function showFinalResults() {
     const gameContainer = document.getElementById('game-container');
@@ -462,53 +457,6 @@ function showFinalResults() {
     if (allCorrect) {
         showCelebration();
     }
-}
-
-// 添加新功能函数
-// 在showCelebration函数中添加
-async function showCelebration() {
-    const modal = document.getElementById('celebration-modal');
-    const characterImg = document.getElementById('character-image');
-    
-    // 随机选择人物图片
-    const randomIndex = Math.floor(Math.random() * CHARACTER_IMAGES.length);
-    characterImg.src = `resources/人物/${CHARACTER_IMAGES[randomIndex]}`;
-
-    try {
-        // 等待图片加载完成
-        await new Promise((resolve, reject) => {
-            characterImg.onload = resolve;
-            characterImg.onerror = reject;
-        });
-
-        // 匹配当前人物数据（添加去除文件后缀的逻辑）
-        const currentImageName = CHARACTER_IMAGES[randomIndex].replace(/\.[^/.]+$/, ""); // 新增：移除文件后缀
-        const charInfo = people_descriptions.find(c => c.name === currentImageName);
-        
-        if (charInfo) {
-            // 添加空值检查
-            document.getElementById('char-name').textContent = charInfo.name || '';
-            document.getElementById('char-subname').textContent = charInfo.sub_name || '';
-            document.getElementById('char-brief').textContent = charInfo.brief || '';
-            
-            // 修改故事和历史标签样式
-            document.getElementById('char-story').innerHTML = `
-                <span class="story-bg">演</span>${charInfo.story || '暂无数据'}
-            `;
-            document.getElementById('char-history').innerHTML = `
-                <span class="history-bg">史</span>${charInfo.history || '暂无数据'}
-            `;
-        }
-    } catch (error) {
-        console.error('加载人物信息失败:', error);
-    }
-    
-    modal.style.display = 'block';
-}
-
-// 删除重复的showCelebration函数定义
-function closeCelebration() {
-    document.getElementById('celebration-modal').style.display = 'none';
 }
 
 function restartGame() {
