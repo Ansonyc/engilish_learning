@@ -1,15 +1,15 @@
 // 配置
 const TOTAL_ROUNDS = 20;
 let words = [
-    'once', 'upon', 'time', 'bear', 'long', 'thick', 'tail', 'other', 'animal', 
-    'trip', 'over', 'walk', 'tickle', 'nose', 'sleep', 'little', 'would', 
-    'even', 'ride', 'fair', 'better', 'than', 'mine', 'thought', 'fox', 
-    'decide', 'trick', 'him', 'creep', 'fisherman', 'take', 'few', 'carry', 
-    'lake', 'smell', 'them', 'came', 'closer', 'those', 'look', 'delicious', 
-    'said', 'say', 'show', 'how', 'catch', 'told', 'tell', 'bite', 'pull', 
-    'wait', 'become', 'grew', 'grow', 'cold', 'begin', 'began', 'snow', 'next', 
-    'still', 'shout', 'huge', 'heap', 'jump', 'frozen', 'freeze', 'break', 
-    'broke', 'sorry', 'cry', 'happen', 'new', 'short', 'smile', 'pad'
+    'once','upon','time','bear','long','thick','tail','other','animal','trip','over','walk',
+'tickle','nose','sleep','little','would','even','ride','fair','better','than','mine',
+'thought','fox','decide','trick','him','creep','take','few','carry','lake','smell',
+'them','came','closer','those','look','said','say','show','how','catch','told','tell',
+'bite','pull','wait','become','grew','grow','cold','begin','began','snow','next','still',
+'shout','huge','heap','jump','frozen','freeze','break','broke','sorry','cry','happen',
+'new','short','smile','pad','hear','cause','grief','human','dear','could','never','keep',
+'mill','hill','work','hard','sack','after','bad','back','think','sell','sale','ill',
+'move','shock','hut','rock','relief','know','knife'
 ];
 let currentWord = '';
 let testedWords = new Set();
@@ -33,7 +33,7 @@ const BAIDU_KEY = '1Ho7cPXr1mqvprhLpGnP';
 // 更新 fetchWordMeaning 方法
 async function fetchWordMeaning(word) {
     try {
-        const youdao = await fetch(`http://192.168.1.2:3000/phonetic?word=${encodeURIComponent(word)}`)
+        const youdao = await fetch(`http://192.168.1.4:3000/phonetic?word=${encodeURIComponent(word)}`)
         const youdaoData = await youdao.json();
         
         // 使用 mp3 格式的音频，对移动设备更友好
