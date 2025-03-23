@@ -212,16 +212,31 @@
     text-align: center;
 }
 
-.modal-footer button {
-    padding: 10px 30px;
+/* 添加通用按钮样式 */
+.common-button,
+#settings-btn,
+#rewards-btn,
+#give-up-btn {
+    padding: 10px 20px;
     background-color: #4CAF50;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
+    transition: background-color 0.3s;
 }
 
-.modal-footer button:hover {
+.common-button:hover,
+#settings-btn:hover,
+#rewards-btn:hover,
+#give-up-btn:hover {
     background-color: #45a049;
+}
+
+/* 移除其他地方重复的按钮样式 */
+.modal-footer button,
+#save-btn,
+#cancel-btn {
+    /* 这些按钮会继承 .common-button 的样式 */
 }

@@ -52,17 +52,20 @@
                 <div class="background-container">
                     <img id="background-image" class="background-image">
                     <div class="info-overlay">
-                        <h2 id="char-name"></h2>
-                        <h3 id="char-subname"></h3>
-                        <p id="char-brief"></p>
-                        <div class="scroll-content">
-                            <p id="char-story"></p>
-                            <p id="char-history"></p>
+                        <div class="info-content">
+                            <h2 id="char-name"></h2>
+                            <h3 id="char-subname"></h3>
+                            <p id="char-brief"></p>
+                            <div class="scroll-content">
+                                <p id="char-story"></p>
+                                <p id="char-history"></p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <button onclick="closeCelebration()" class="close-btn">关闭</button>
+            <!-- 修改 celebration-modal 的关闭按钮 -->
+            <button onclick="closeCelebration()" class="common-button">关闭</button>
         </div>
     </div>
     <!-- 添加奖励角色展示弹窗 -->
@@ -75,7 +78,7 @@
             </div>
             <div id="rewards-container" class="rewards-container"></div>
             <div class="modal-footer">
-                <button onclick="closeRewardsModal()">关闭</button>
+                <button class="common-button" onclick="closeRewardsModal()">关闭</button>
             </div>
         </div>
     </div>
