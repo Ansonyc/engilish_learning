@@ -1,5 +1,6 @@
 // 配置
 const TOTAL_ROUNDS = 1;
+const REWARDED_CHARACTERS_KEY = 'rewardedCharacters';
 let words = [
     'once','upon','time','bear','long','thick','tail','other','animal','trip','over','walk',
 'tickle','nose','sleep','little','would','even','ride','fair','better','than','mine',
@@ -294,48 +295,6 @@ function handleConfirm() {
     }, 300);
 }
 
-function giveUp() {
-    // 获取按钮元素
-    const giveUpBtn = document.getElementById('give-up-btn');
-    
-    // 获取可视区域的尺寸
-    const viewportWidth = window.innerWidth;
-    const viewportHeight = window.innerHeight;
-    
-    // 按钮的尺寸
-    const btnRect = giveUpBtn.getBoundingClientRect();
-    
-    // 随机生成新位置（保持在可视区域内）
-    const newX = Math.random() * (viewportWidth - btnRect.width);
-    const newY = Math.random() * (viewportHeight - btnRect.height);
-    
-    // 设置新位置
-    giveUpBtn.style.position = 'fixed';
-    giveUpBtn.style.left = `${newX}px`;
-    giveUpBtn.style.top = `${newY}px`;
-    
-    // // 原有的放弃逻辑
-    // const lettersContainer = document.getElementById('letters-container');
-    // const slots = document.querySelectorAll('.slot');
-    
-    // slots.forEach(slot => {
-    //     if (slot.hasChildNodes()) {
-    //         lettersContainer.appendChild(slot.firstChild);
-    //     }
-    // });
-    
-    // currentWord.split('').forEach((letter, index) => {
-    //     const letterDiv = document.createElement('div');
-    //     letterDiv.className = 'letter';
-    //     letterDiv.textContent = letter;
-    //     letterDiv.draggable = true;
-    //     letterDiv.addEventListener('dragstart', handleDragStart);
-    //     slots[index].appendChild(letterDiv);
-    // });
-    
-    // showResult(false, '很遗憾，正确答案是：' + currentWord);
-}
-
 async function createGame() {
     console.info('createGame called');
     console.info(testedWords)
@@ -404,6 +363,7 @@ async function createGame() {
 // 在文件开头添加
 function updateRewardsButton() {
     const rewardedCharacters = JSON.parse(localStorage.getItem(REWARDED_CHARACTERS_KEY) || '[]');
+    console.info('rewardedCharacters : ' + rewardedCharacters)
     const rewardsBtn = document.getElementById('rewards-btn');
     rewardsBtn.style.display = rewardedCharacters.length > 0 ? 'block' : 'none';
 }
@@ -443,6 +403,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const cancelBtn = document.getElementById('cancel-btn');
     const saveBtn = document.getElementById('save-btn');
     const wordsInput = document.getElementById('words-input');
+    const rewardsBtn = document.getElementById('rewards-btn');  // 添加这行
+
+    // 添加奖励按钮点击事件
+    rewardsBtn.addEventListener('click', showRewardsModal);
 
     // 显示设置面板
     settingsBtn.addEventListener('click', () => {
@@ -533,6 +497,7 @@ function showFinalResults() {
     const allCorrect = currentResults.every(r => r.success) && currentResults.length === TOTAL_ROUNDS;
     
     if (allCorrect) {
+        showCelebration();
         // 获取已奖励的角色
         const rewardedCharacters = JSON.parse(localStorage.getItem(REWARDED_CHARACTERS_KEY) || '[]');
         
