@@ -24,10 +24,6 @@
     overflow-y: auto;
 }
 
-.modal-content {
-    text-align: ;
-}
-
 .rewards-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -96,8 +92,7 @@
 .modal {
     width: 90%;
     max-width: 1200px;
-    height: 90vh;  /* 使用固定高度 */
-    overflow: hidden;
+    height: 90vh;
     background: #fff;
     display: none;
     position: fixed;
@@ -106,21 +101,15 @@
     transform: translate(-50%, -50%);
     border-radius: 10px;
     z-index: 1001;
-    padding: 0;  /* 移除内边距 */
+    padding: 0;
 }
 
 .modal-content {
     display: flex;
     flex-direction: column;
-    height: 100%;  /* 填满父容器高度 */
+    height: 100%;
     width: 100%;
-}
-
-.modal-header {
-    flex-shrink: 0;  /* 防止头部被压缩 */
-    padding: 20px;
-    background: #f8f8f8;
-    border-bottom: 1px solid #eee;
+    overflow: hidden;  /* 将 overflow 控制移到这里 */
 }
 
 .rewards-container {
@@ -128,7 +117,7 @@
     overflow-y: auto;
     padding: 20px;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));  /* 改为固定大小 */
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;
     min-height: 0;
 }
