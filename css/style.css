@@ -89,10 +89,12 @@
 }
 
 /* 删除重复的 .modal 定义，只保留这一个 */
-.modal {
+/* 使用更具体的选择器 */
+#rewards-modal.modal {
     width: 90%;
     max-width: 1200px;
     height: 90vh;
+    overflow: visible;
     background: #fff;
     display: none;
     position: fixed;
@@ -104,12 +106,26 @@
     padding: 0;
 }
 
-.modal-content {
+#rewards-modal .modal-content {
     display: flex;
     flex-direction: column;
     height: 100%;
     width: 100%;
-    overflow: hidden;  /* 将 overflow 控制移到这里 */
+    padding-top: 40px;
+}
+
+#rewards-modal .modal-footer {
+    flex-shrink: 0;
+    padding: 20px;
+    background: #f8f8f8;
+    border-top: 1px solid #eee;
+    text-align: center;
+}
+
+#rewards-modal .modal-footer .common-button {
+    width: 120px;
+    margin: 0 auto;
+    display: block;
 }
 
 .rewards-container {

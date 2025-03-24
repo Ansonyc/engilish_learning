@@ -26,11 +26,6 @@ if (localStorage.getItem('wordList')) {
     words = JSON.parse(localStorage.getItem('wordList'));
 }
 
-// 百度翻译 API 配置
-const BAIDU_APP_ID = '20250317002306712';
-const BAIDU_KEY = '1Ho7cPXr1mqvprhLpGnP';
-
-
 // 更新 fetchWordMeaning 方法
 async function fetchWordMeaning(word) {
     try {
