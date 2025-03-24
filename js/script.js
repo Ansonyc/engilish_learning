@@ -29,7 +29,7 @@ if (localStorage.getItem('wordList')) {
 // 更新 fetchWordMeaning 方法
 async function fetchWordMeaning(word) {
     try {
-        const youdao = await fetch(`http://192.168.1.4:3000/phonetic?word=${encodeURIComponent(word)}`)
+        const youdao = await fetch(`https://engilish-learning.onrender.com/phonetic?word=${encodeURIComponent(word)}`)
         const youdaoData = await youdao.json();
         
         // 使用 mp3 格式的音频，对移动设备更友好

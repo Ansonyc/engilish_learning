@@ -4,7 +4,9 @@ const axios = require('axios');
 const md5 = require('md5');
 
 const app = express();
-app.use(cors());
+const port = process.env.PORT || 3000;
+
+app.use(cors());  // 添加 CORS 支持
 
 // 添加获取音标的接口
 // 修改获取音标的接口
@@ -42,6 +44,6 @@ app.get('/phonetic', async (req, res) => {
 
 app.use(express.static('.'));
 
-app.listen(3000, () => {
-    console.log('Server running at http://localhost:3000');
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
 });
