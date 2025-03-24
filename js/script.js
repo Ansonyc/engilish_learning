@@ -1,5 +1,5 @@
 // 配置
-const TOTAL_ROUNDS = 1;
+const TOTAL_ROUNDS = 20;
 const REWARDED_CHARACTERS_KEY = 'rewardedCharacters';
 let words = [
     'once','upon','time','bear','long','thick','tail','other','animal','trip','over','walk',
@@ -519,7 +519,7 @@ function showFinalResults() {
 
         if (availableCharacters.length > 0) {
             // 记录新奖励的角色
-            const selectedPerson = availableCharacters[7];
+            const selectedPerson = availableCharacters[Math.floor(Math.random() * availableCharacters.length)];
             rewardedCharacters.push(selectedPerson[0]);
             localStorage.setItem(REWARDED_CHARACTERS_KEY, JSON.stringify(rewardedCharacters));
             
