@@ -32,14 +32,11 @@ let people_descriptions = [
 ]
 
 // 展示慶祝彈窗
-async function showCelebration() {
+async function showCelebration(selectedPerson) {
     const modal = document.getElementById('celebration-modal');
     const characterImg = document.getElementById('character-image');
     const backgroundImg = document.getElementById('background-image');
     
-    // 随机选择一个人物信息
-    const randomIndex = Math.floor(Math.random() * people_descriptions.length);
-    const selectedPerson = people_descriptions[randomIndex];
     console.log(selectedPerson);
     
     // 设置图片路径

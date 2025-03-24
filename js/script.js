@@ -1,5 +1,5 @@
 // 配置
-const TOTAL_ROUNDS = 1;
+const TOTAL_ROUNDS = 20;
 const REWARDED_CHARACTERS_KEY = 'rewardedCharacters';
 let words = [
     'once','upon','time','bear','long','thick','tail','other','animal','trip','over','walk',
@@ -509,7 +509,6 @@ function showFinalResults() {
     const allCorrect = currentResults.every(r => r.success) && currentResults.length === TOTAL_ROUNDS;
     
     if (allCorrect) {
-        showCelebration();
         // 获取已奖励的角色
         const rewardedCharacters = JSON.parse(localStorage.getItem(REWARDED_CHARACTERS_KEY) || '[]');
         
@@ -527,7 +526,7 @@ function showFinalResults() {
             // 更新奖励按钮显示状态
             updateRewardsButton();
             
-            showCelebration();
+            showCelebration(selectedPerson);
         } else {
             alert('恭喜你！你已经收集了所有角色！');
         }
