@@ -10,7 +10,9 @@ let words = [
 'shout','huge','heap','jump','frozen','freeze','break','broke','sorry','cry','happen',
 'new','short','smile','pad','hear','cause','grief','human','dear','could','never','keep',
 'mill','hill','work','hard','sack','after','bad','back','think','sell','sale','ill',
-'move','shock','hut','rock','relief','know','knife'
+'move','shock','hut','rock','relief','know','knife','sign','design','climb','comb',
+'lamb','rhino','debt','doubt','write','wrong','robot','tiger','basket','garden','student',
+'remember','breakfast','sunday','have','chair'
 ];
 let currentWord = '';
 let testedWords = new Set();
