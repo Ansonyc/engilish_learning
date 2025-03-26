@@ -8,7 +8,7 @@ body {
     background-color: #f0f0f0;
 }
 
-#settings-btn {
+/* #settings-btn {
     position: absolute;
     top: 20px;
     right: 20px;
@@ -18,7 +18,7 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-}
+} */
 #rewards-btn {
     position: absolute;
     top: 20px;

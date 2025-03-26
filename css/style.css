@@ -219,7 +219,7 @@
 
 /* 添加通用按钮样式 */
 .common-button,
-#settings-btn,
+/* #settings-btn, */
 #rewards-btn,
 #give-up-btn {
     padding: 10px 20px;
@@ -233,7 +233,7 @@
 }
 
 .common-button:hover,
-#settings-btn:hover,
+/* #settings-btn:hover, */
 #rewards-btn:hover,
 #give-up-btn:hover {
     background-color: #45a049;
