@@ -37,10 +37,13 @@ body {
     align-items: center;
     gap: 30px;
     margin-top: 100px;
+    width: 100%;  /* 添加宽度 */
+    padding: 0 20px;  /* 添加内边距 */
+    box-sizing: border-box;  /* 确保padding不会增加总宽度 */
 }
 
 #word-hint {
-    margin: 20px 0;
+    margin: 5px 0;
     font-size: 18px;
     color: #666;
     min-height: 27px;
@@ -50,4 +53,6 @@ body {
     align-items: center;
     justify-content: center;
     gap: 10px;
+    width: 100%;  /* 添加宽度 */
+    max-width: 800px;  /* 添加最大宽度限制 */
 }
