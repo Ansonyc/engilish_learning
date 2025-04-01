@@ -24,12 +24,16 @@ async function fetchWordMeaning(word) {
     try {
         const youdao = await fetch(`https://engilish-learning.onrender.com/phonetic?word=${encodeURIComponent(word)}`)
         const youdaoData = await youdao.json();
-        const baidu = await fetch(`https://engilish-learning.onrender.com/translate?word=${encodeURIComponent(word)}`)
-        const baiduData = await baidu.json();
-        // console.info('获取翻译响应:', baiduData);
+        const baidu = await fetch(`https://engilish-learning.onrender.com/translate?word=${encodeURIComponent(word)}`)        const baiduData = await baidu.json();
+        console.info('获取翻译响应:', baiduData);
         // 使用 mp3 格式的音频，对移动设备更友好
+        let translation = youdaoData.translation;
+        if (baiduData.translation && baiduData.translation.length > 0) {
+            translation = baiduData.translation;
+        }
+
         return { 
-            meaning: `[${youdaoData.phonetic}]\n${baiduData.translation}`,
+            meaning: `[${youdaoData.phonetic}]\n${translation}`,
             audioUrl: `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(word)}&type=1`
         };
     } catch (error) {
@@ -319,8 +323,8 @@ async function createGame() {
     wordHint.innerHTML = `
         <div style="text-align: center; width: 100%; margin: 0 auto;">
             <div style="margin-bottom: 10px; color: #666;">第 ${testedWords.size} / ${TOTAL_ROUNDS} 轮</div>
-            <div style="display: flex; align-items: center; justify-content: center; gap: 10px; min-width: fit-content;">
-                <span style="white-space: nowrap;">提示：${meaning}</span>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                <span style="white-space: pre-wrap; word-break: break-word;">提示：${meaning}</span>
                 ${audioUrl ? `<button class="play-sound-btn" onclick="playWordSound('${audioUrl}')">🔊</button>` : ''}
             </div>
         </div>

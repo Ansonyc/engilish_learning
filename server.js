@@ -5,7 +5,7 @@ const md5 = require('md5');
 
 // 添加百度翻译 API 配置
 const BAIDU_APP_ID = '20250317002306712';
-const BAIDU_SECRET = '1Ho7cPXr1mqvprhLpGnP';
+const BAIDU_SECRET = 'e9VmLEcJwn8Ok6QeVFfG';
 
 const app = express();
 const port = process.env.PORT || 3000;
