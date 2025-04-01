@@ -24,8 +24,8 @@ async function fetchWordMeaning(word) {
     try {
         const youdao = await fetch(`https://engilish-learning.onrender.com/phonetic?word=${encodeURIComponent(word)}`)
         const youdaoData = await youdao.json();
-        const baidu = await fetch(`https://engilish-learning.onrender.com/translate?word=${encodeURIComponent(word)}`)        const baiduData = await baidu.json();
-        console.info('获取翻译响应:', baiduData);
+        const baidu = await fetch(`https://engilish-learning.onrender.com/translate?word=${encodeURIComponent(word)}`)
+        const baiduData = await baidu.json();
         // 使用 mp3 格式的音频，对移动设备更友好
         let translation = youdaoData.translation;
         if (baiduData.translation && baiduData.translation.length > 0) {
