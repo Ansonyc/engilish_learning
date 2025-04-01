@@ -22,7 +22,7 @@ app.get('/phonetic', async (req, res) => {
         }
         
         const response = await axios.get(`https://dict.youdao.com/jsonapi?q=${encodeURIComponent(word)}`);
-        console.info('获取音标响应:', response.data);  // Log the response for debugging
+        // console.info('获取音标响应:', response.data);  // Log the response for debugging
         if (response.data?.ec?.word?.[0]) {
             const wordInfo = response.data.ec.word[0];
             const phonetic = wordInfo.usphone || '';
@@ -67,7 +67,7 @@ app.get('/translate', async (req, res) => {
                 sign: sign
             }
         });
-        console.info('获取翻译响应:', response.data);  // Log the response for debugging
+        // console.info('获取翻译响应:', response.data);  // Log the response for debugging
 
         if (response.data?.trans_result?.[0]) {
             res.json({
