@@ -421,8 +421,8 @@ function closeRewardsModal() {
     modalBackdrop.style.display = 'none';
 }
 
-// 在 DOMContentLoaded 事件监听器中添加
-document.addEventListener('DOMContentLoaded', () => {
+// 修改 DOMContentLoaded 事件监听器为异步函数
+document.addEventListener('DOMContentLoaded', async () => {
     // 先加载词库
     const wordsLoaded = await loadWords();
     if (!wordsLoaded) {
@@ -431,7 +431,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 设置按钮相关
-    // const settingsBtn = document.getElementById('settings-btn');
     const settingsModal = document.getElementById('settings-modal');
     const modalBackdrop = document.getElementById('modal-backdrop');
     const cancelBtn = document.getElementById('cancel-btn');
