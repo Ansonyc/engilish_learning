@@ -17,24 +17,6 @@ async function loadWords() {
     }
 }
 
-// 修改 DOMContentLoaded 事件监听器
-document.addEventListener('DOMContentLoaded', async () => {
-    // 先加载词库
-    const wordsLoaded = await loadWords();
-    if (!wordsLoaded) {
-        document.getElementById('word-hint').textContent = '词库加载失败，请刷新页面重试';
-        return;
-    }
-
-    console.info('DOMContentLoaded event fired');
-    // 初始化游戏
-    createGame().catch(error => {
-        console.error('游戏初始化失败:', error);
-        document.getElementById('word-hint').textContent = '游戏加载失败，请刷新页面重试';
-    });
-
-    updateRewardsButton();
-});
 let currentWord = '';
 let testedWords = new Set();
 let currentResults = [];
@@ -441,6 +423,13 @@ function closeRewardsModal() {
 
 // 在 DOMContentLoaded 事件监听器中添加
 document.addEventListener('DOMContentLoaded', () => {
+    // 先加载词库
+    const wordsLoaded = await loadWords();
+    if (!wordsLoaded) {
+        document.getElementById('word-hint').textContent = '词库加载失败，请刷新页面重试';
+        return;
+    }
+
     // 设置按钮相关
     // const settingsBtn = document.getElementById('settings-btn');
     const settingsModal = document.getElementById('settings-modal');
