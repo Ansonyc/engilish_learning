@@ -1,7 +1,7 @@
 // 配置
 const TOTAL_ROUNDS = 20;
 const REWARDED_CHARACTERS_KEY = 'rewardedCharacters';
-const WORDS_CONFIG_URL = 'https://engilish-learning.onrender.com/words';
+const WORDS_CONFIG_URL = process.env.WORDS_CONFIG_URL;
 let words = [];
 
 // 从网络加载词库
