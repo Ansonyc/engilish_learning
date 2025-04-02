@@ -3,14 +3,26 @@ const cors = require('cors');
 const axios = require('axios');
 const md5 = require('md5');
 
-// 从环境变量中读取百度翻译 API 配置
+// 从环境变量中读取配置
 const BAIDU_APP_ID = process.env.BAIDU_APP_ID;
 const BAIDU_SECRET = process.env.BAIDU_SECRET;
+const WORDS_CONFIG_URL = process.env.WORDS_CONFIG_URL;
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(cors());  // 添加 CORS 支持
+app.use(cors());
+
+// 添加获取单词列表的接口
+app.get('/words', async (req, res) => {
+    try {
+        const response = await axios.get(WORDS_CONFIG_URL);
+        res.send(response.data);
+    } catch (error) {
+        console.error('获取单词列表失败:', error);
+        res.status(500).send('获取单词列表失败');
+    }
+});
 
 // 添加获取音标的接口
 // 修改获取音标的接口

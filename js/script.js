@@ -1,13 +1,12 @@
 // 配置
 const TOTAL_ROUNDS = 20;
 const REWARDED_CHARACTERS_KEY = 'rewardedCharacters';
-const WORDS_CONFIG_URL = process.env.WORDS_CONFIG_URL;
 let words = [];
 
 // 从网络加载词库
 async function loadWords() {
     try {
-        const response = await fetch(WORDS_CONFIG_URL);
+        const response = await fetch('/words');
         const text = await response.text();
         words = text.split('\n').filter(word => word.trim().length > 0);
         console.info('从网络加载词库成功');
