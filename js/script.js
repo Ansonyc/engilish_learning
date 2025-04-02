@@ -1,9 +1,41 @@
 // 配置
 const TOTAL_ROUNDS = 20;
 const REWARDED_CHARACTERS_KEY = 'rewardedCharacters';
-let words = [
-    'once','upon','time','bear','long','thick','tail','other','animal','trip','over','walk','tickle','nose','sleep','little','would','even','ride','fair','better','than','mine','thought','fox','decide','trick','him','creep','take','few','carry','lake','smell','them','came','closer','those','look','said','say','show','how','catch','told','tell','bite','pull','wait','become','grew','grow','cold','begin','began','snow','next','still','shout','huge','heap','jump','frozen','freeze','break','broke','sorry','cry','happen','new','short','smile','pad','hear','cause','grief','human','dear','could','never','keep','mill','hill','work','hard','sack','after','bad','back','think','sell','sale','ill','move','shock','hut','rock','relief','know','knife','sign','design','climb','comb','lamb','rhino','debt','doubt','write','wrong','robot','tiger','basket','garden','student','remember','breakfast','sunday','have','chair','share','lunch','see','bird','hurt','arm','dirt','shirt','now','girl','boy','lay','terrible','cough','fell','fog','sick','fed','come','pen','love','try','only','easy','off','lot','there','phone','where','rain','pain','gain','eat','meat','tea','beat','leaf','bee','meet','feet','see','tree','pie','die','tie','lie','coat','goat','boat','road','soap','toe','hoe','woe','foe','cue','value','cat','cup','cold','city','cycle','face','game','guess','goat','gym','cage','giraffe','dog','egg','fish','hat','igloo','jacket','kid','lamb','monkey','nose','queen','rabbit','sun','tiger','up','van','web','box','zebra','cat','rat','hat','cab','map','bed','egg','vet','pen','hen','pig','kid','bin','big','sit','frog','mom','fox','log','bus','cup','nut','hug','he','she','me','we','hi','go','no','so','hello','make','cake','name','lake','take','game','same','late','eve','compete','gene','like','bite','ride','nine','mine','fine','kite','rose','joke','coke','hope','home','bone','note','cute','mute','fume','tube','mule','cube','use','dune','aim','yes','yellow','yogurt','funny','happy','family','my','why','sky','day','may','play','grey','convey','obey','boy','toy','joy','buy','guy','car','bark','park','pork','fork','short','her','term','serve','skirt','hurt','turn','nurse','war','warm','ward','word','world','black','blind','block','class','close','cloud','flat','flag','fly','glad','glass','glove','place','plane','play','sleep','slow','slipper','ask','desk','mask','ski','skill','gasp','grasp','crisp','sport','space','spoon','best','west','beast','star','start','stone','drink','dream','drive','tree','try','trick','bring','break','bridge','crown','cream','friend','frog','frown','great','grape','grey','prince','prize','present'
-];
+const WORDS_CONFIG_URL = 'https://engilish-learning.onrender.com/words';
+let words = [];
+
+// 从网络加载词库
+async function loadWords() {
+    try {
+        const response = await fetch(WORDS_CONFIG_URL);
+        const text = await response.text();
+        words = text.split('\n').filter(word => word.trim().length > 0);
+        console.info('从网络加载词库成功');
+        return true;
+    } catch (error) {
+        console.error('加载词库失败:', error);
+        return false;
+    }
+}
+
+// 修改 DOMContentLoaded 事件监听器
+document.addEventListener('DOMContentLoaded', async () => {
+    // 先加载词库
+    const wordsLoaded = await loadWords();
+    if (!wordsLoaded) {
+        document.getElementById('word-hint').textContent = '词库加载失败，请刷新页面重试';
+        return;
+    }
+
+    console.info('DOMContentLoaded event fired');
+    // 初始化游戏
+    createGame().catch(error => {
+        console.error('游戏初始化失败:', error);
+        document.getElementById('word-hint').textContent = '游戏加载失败，请刷新页面重试';
+    });
+
+    updateRewardsButton();
+});
 let currentWord = '';
 let testedWords = new Set();
 let currentResults = [];
