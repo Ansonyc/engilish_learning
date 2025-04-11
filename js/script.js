@@ -408,15 +408,31 @@ function showRewardsModal() {
         if (character) {
             const div = document.createElement('div');
             div.className = 'reward-item';
-            div.style.cursor = 'pointer';  // 添加鼠标手型
-            div.onclick = () => showCelebration(character);  // 添加点击事件
-            div.innerHTML = `
-                <div class="character-card">
-                    <img src="resources/人物/${character[0]}.png" alt="${character[0]}" 
-                         style="width: 100%; height: calc(100% - 24px); object-fit: cover;">
-                    <h3 style="margin: 0; padding: 4px; font-size: 14px;">${character[0]}</h3>
-                </div>
-            `;
+            div.style.cursor = 'pointer';
+
+            const characterCard = document.createElement('div');
+            characterCard.className = 'character-card';
+            
+            const img = document.createElement('img');
+            img.src = `resources/人物/${character[0]}.png`;
+            img.alt = character[0];
+            img.style.width = '100%';
+            img.style.height = 'calc(100% - 24px)';
+            img.style.objectFit = 'cover';
+            
+            const h3 = document.createElement('h3');
+            h3.style.margin = '0';
+            h3.style.padding = '4px';
+            h3.style.fontSize = '14px';
+            h3.textContent = character[0];
+            
+            characterCard.appendChild(img);
+            characterCard.appendChild(h3);
+            div.appendChild(characterCard);
+            
+            // 在添加到 DOM 之前绑定点击事件
+            div.addEventListener('click', () => showCelebration(character));
+            
             newRewardsContainer.appendChild(div);
         }
     });
