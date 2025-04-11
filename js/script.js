@@ -410,21 +410,12 @@ function showRewardsModal() {
     
     // 设置内容容器样式
     rewardsContainer.style.display = 'grid';
-    rewardsContainer.style.gridTemplateColumns = 'repeat(auto-fill, minmax(150px, 1fr))';
-    rewardsContainer.style.gap = '20px';
-    rewardsContainer.style.padding = '20px';
+    rewardsContainer.style.gridTemplateColumns = 'repeat(auto-fill, minmax(200px, 1fr))'; // 减小最小列宽
+    rewardsContainer.style.gap = '10px'; // 减小间距
+    rewardsContainer.style.padding = '15px'; // 减小内边距
     rewardsContainer.style.overflowY = 'auto';
     rewardsContainer.style.maxHeight = 'calc(80vh - 120px)';
     rewardsContainer.innerHTML = '';
-    
-    // 设置遮罩层样式
-    modalBackdrop.style.position = 'fixed';
-    modalBackdrop.style.top = '0';
-    modalBackdrop.style.left = '0';
-    modalBackdrop.style.width = '100vw';
-    modalBackdrop.style.height = '100vh';
-    modalBackdrop.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-    modalBackdrop.style.zIndex = '999';
 
     rewardedCharacters.forEach(characterName => {
         const character = people_descriptions.find(p => p[0] === characterName);
@@ -432,11 +423,14 @@ function showRewardsModal() {
             const div = document.createElement('div');
             div.className = 'reward-item';
             div.style.textAlign = 'center';
+            div.style.backgroundColor = 'white';
+            div.style.borderRadius = '4px'; // 减小圆角
+            div.style.padding = '5px'; // 减小内边距
             div.innerHTML = `
-                <div class="character-card">
+                <div class="character-card" style="display: flex; flex-direction: column; align-items: center;">
                     <img src="resources/人物/${character[0]}.png" alt="${character[0]}" 
-                         style="width: 100%; height: auto; border-radius: 8px;">
-                    <h3 style="margin: 10px 0; font-size: 16px;">${character[0]}</h3>
+                         style="width: 100%; height: auto; border-radius: 4px; margin-bottom: 3px;">
+                    <h3 style="margin: 0; font-size: 14px;">${character[0]}</h3>
                 </div>
             `;
             rewardsContainer.appendChild(div);

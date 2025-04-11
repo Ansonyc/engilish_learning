@@ -24,14 +24,14 @@
     overflow-y: auto;
 }
 
-.rewards-container {
+/* .rewards-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
     padding: 20px;
     max-height: 70vh;
     overflow-y: auto;
-}
+} */
 
 .reward-item {
     background: #fff;
@@ -138,7 +138,7 @@
     min-height: 0;
 }
 
-.reward-item {
+/* .reward-item {
     background: #fff;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -146,13 +146,13 @@
     height: 500px;  /* 设置固定高度 */
     display: flex;
     flex-direction: column;
-}
+} */
 
-.character-card {
+/* .character-card {
     height: 100%;
     display: flex;
     flex-direction: column;
-}
+} */
 
 .character-image {
     height: 250px;  /* 固定图片高度 */
