@@ -1,12 +1,12 @@
 // 配置
-const TOTAL_ROUNDS = 1;
-const REWARDED_CHARACTERS_KEY = 'rewardedCharacters_1';
+const TOTAL_ROUNDS = 20;
+const REWARDED_CHARACTERS_KEY = 'rewardedCharacters';
 let words = [];
 
 // 从网络加载词库
 async function loadWords() {
     try {
-        const response = await fetch('https://gist.githubusercontent.com/Ansonyc/ce344a8d67087e808b8a0b6ab4fa405e/raw/07c44999e30b6abb63fe24736f8d0323c9ffb293/words.txt');
+        const response = await fetch('/words');
         const text = await response.text();
         words = text.split('\n').filter(word => word.trim().length > 0);
         console.info('从网络加载词库成功');
@@ -408,17 +408,13 @@ function showRewardsModal() {
         if (character) {
             const div = document.createElement('div');
             div.className = 'reward-item';
-            div.style.textAlign = 'center';
-            div.style.backgroundColor = '#f5f5f5';
-            div.style.borderRadius = '4px';
-            div.style.overflow = 'hidden';
-            div.style.margin = '0';
-            div.style.padding = '0';
+            div.style.cursor = 'pointer';  // 添加鼠标手型
+            div.onclick = () => showCelebration(character);  // 添加点击事件
             div.innerHTML = `
-                <div class="character-card" style="display: flex; flex-direction: column;">
+                <div class="character-card">
                     <img src="resources/人物/${character[0]}.png" alt="${character[0]}" 
-                         style="width: 100%; height: auto; display: block;">
-                    <h3 style="margin: 8px 0; font-size: 14px; padding: 0 5px;">${character[0]}</h3>
+                         style="width: 100%; height: calc(100% - 24px); object-fit: cover;">
+                    <h3 style="margin: 0; padding: 4px; font-size: 14px;">${character[0]}</h3>
                 </div>
             `;
             newRewardsContainer.appendChild(div);
