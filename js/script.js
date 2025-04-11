@@ -1,6 +1,6 @@
 // 配置
 const TOTAL_ROUNDS = 1;
-const REWARDED_CHARACTERS_KEY = 'rewardedCharacters';
+const REWARDED_CHARACTERS_KEY = 'rewardedCharacters_1';
 let words = [];
 
 // 从网络加载词库
@@ -386,58 +386,45 @@ function showRewardsModal() {
     const modalBackdrop = document.getElementById('modal-backdrop');
     const rewardedCharacters = JSON.parse(localStorage.getItem(REWARDED_CHARACTERS_KEY) || '[]');
     
-    // 设置模态框样式
-    rewardsModal.style.position = 'fixed';
-    rewardsModal.style.top = '50%';
-    rewardsModal.style.left = '50%';
-    rewardsModal.style.transform = 'translate(-50%, -50%)';
-    rewardsModal.style.maxHeight = '80vh';
-    rewardsModal.style.width = '90vw';
-    rewardsModal.style.backgroundColor = 'white';
-    rewardsModal.style.borderRadius = '10px';
-    rewardsModal.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
-    rewardsModal.style.zIndex = '1000';
+    // 重置模态框内容
+    rewardsModal.innerHTML = `
+        <div class="rewardsmodal-content">
+            <div class="modal-header">
+                <h2>已获得的角色</h2>
+            </div>
+            <div id="rewards-container" class="rewards-container"></div>
+            <div class="modal-footer">
+                <button class="common-button" onclick="closeRewardsModal()">关闭</button>
+            </div>
+        </div>
+    `;
 
-    // 设置标题样式
-    const titleDiv = document.createElement('div');
-    titleDiv.textContent = '已获得的角色';
-    titleDiv.style.padding = '20px';
-    titleDiv.style.borderBottom = '1px solid #eee';
-    titleDiv.style.fontWeight = 'bold';
-    titleDiv.style.fontSize = '18px';
-    rewardsModal.innerHTML = '';
-    rewardsModal.appendChild(titleDiv);
+    // 获取新的容器引用
+    const newRewardsContainer = document.getElementById('rewards-container');
     
-    // 设置内容容器样式
-    rewardsContainer.style.display = 'grid';
-    rewardsContainer.style.gridTemplateColumns = 'repeat(auto-fill, minmax(200px, 1fr))'; // 减小最小列宽
-    rewardsContainer.style.gap = '10px'; // 减小间距
-    rewardsContainer.style.padding = '15px'; // 减小内边距
-    rewardsContainer.style.overflowY = 'auto';
-    rewardsContainer.style.maxHeight = 'calc(80vh - 120px)';
-    rewardsContainer.innerHTML = '';
-
+    // 填充角色卡片
     rewardedCharacters.forEach(characterName => {
         const character = people_descriptions.find(p => p[0] === characterName);
         if (character) {
             const div = document.createElement('div');
             div.className = 'reward-item';
             div.style.textAlign = 'center';
-            div.style.backgroundColor = 'white';
-            div.style.borderRadius = '4px'; // 减小圆角
-            div.style.padding = '5px'; // 减小内边距
+            div.style.backgroundColor = '#f5f5f5';
+            div.style.borderRadius = '4px';
+            div.style.overflow = 'hidden';
+            div.style.margin = '0';
+            div.style.padding = '0';
             div.innerHTML = `
-                <div class="character-card" style="display: flex; flex-direction: column; align-items: center;">
+                <div class="character-card" style="display: flex; flex-direction: column;">
                     <img src="resources/人物/${character[0]}.png" alt="${character[0]}" 
-                         style="width: 100%; height: auto; border-radius: 4px; margin-bottom: 3px;">
-                    <h3 style="margin: 0; font-size: 14px;">${character[0]}</h3>
+                         style="width: 100%; height: auto; display: block;">
+                    <h3 style="margin: 8px 0; font-size: 14px; padding: 0 5px;">${character[0]}</h3>
                 </div>
             `;
-            rewardsContainer.appendChild(div);
+            newRewardsContainer.appendChild(div);
         }
     });
 
-    rewardsModal.appendChild(rewardsContainer);
     modalBackdrop.style.display = 'block';
     rewardsModal.style.display = 'block';
 }

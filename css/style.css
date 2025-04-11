@@ -26,12 +26,15 @@
 
 .reward-item {
     background: #fff;
+    width: 200px;
+    height: 320px;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     overflow: hidden;
 }
 
 .character-card {
+    width: 200px;
     display: flex;
     flex-direction: column;
 }
@@ -81,16 +84,6 @@
     width: 120px;
     margin: 0 auto;
     display: block;
-}
-
-.rewards-container {
-    flex: 1;
-    overflow-y: auto;
-    padding: 20px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-    min-height: 0;
 }
 
 .character-image {
@@ -154,18 +147,4 @@
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s;
-}
-
-.common-button:hover,
-/* #settings-btn:hover, */
-#rewards-btn:hover,
-#give-up-btn:hover {
-    background-color: #45a049;
-}
-
-/* 移除其他地方重复的按钮样式 */
-.modal-footer button,
-#save-btn,
-#cancel-btn {
-    /* 这些按钮会继承 .common-button 的样式 */
 }
