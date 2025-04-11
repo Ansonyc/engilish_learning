@@ -1,12 +1,12 @@
 // 配置
-const TOTAL_ROUNDS = 20;
+const TOTAL_ROUNDS = 1;
 const REWARDED_CHARACTERS_KEY = 'rewardedCharacters';
 let words = [];
 
 // 从网络加载词库
 async function loadWords() {
     try {
-        const response = await fetch('/words');
+        const response = await fetch('https://gist.githubusercontent.com/Ansonyc/ce344a8d67087e808b8a0b6ab4fa405e/raw/07c44999e30b6abb63fe24736f8d0323c9ffb293/words.txt');
         const text = await response.text();
         words = text.split('\n').filter(word => word.trim().length > 0);
         console.info('从网络加载词库成功');
@@ -386,30 +386,64 @@ function showRewardsModal() {
     const modalBackdrop = document.getElementById('modal-backdrop');
     const rewardedCharacters = JSON.parse(localStorage.getItem(REWARDED_CHARACTERS_KEY) || '[]');
     
+    // 设置模态框样式
+    rewardsModal.style.position = 'fixed';
+    rewardsModal.style.top = '50%';
+    rewardsModal.style.left = '50%';
+    rewardsModal.style.transform = 'translate(-50%, -50%)';
+    rewardsModal.style.maxHeight = '80vh';
+    rewardsModal.style.width = '90vw';
+    rewardsModal.style.backgroundColor = 'white';
+    rewardsModal.style.borderRadius = '10px';
+    rewardsModal.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+    rewardsModal.style.zIndex = '1000';
+
+    // 设置标题样式
+    const titleDiv = document.createElement('div');
+    titleDiv.textContent = '已获得的角色';
+    titleDiv.style.padding = '20px';
+    titleDiv.style.borderBottom = '1px solid #eee';
+    titleDiv.style.fontWeight = 'bold';
+    titleDiv.style.fontSize = '18px';
+    rewardsModal.innerHTML = '';
+    rewardsModal.appendChild(titleDiv);
+    
+    // 设置内容容器样式
+    rewardsContainer.style.display = 'grid';
+    rewardsContainer.style.gridTemplateColumns = 'repeat(auto-fill, minmax(150px, 1fr))';
+    rewardsContainer.style.gap = '20px';
+    rewardsContainer.style.padding = '20px';
+    rewardsContainer.style.overflowY = 'auto';
+    rewardsContainer.style.maxHeight = 'calc(80vh - 120px)';
     rewardsContainer.innerHTML = '';
+    
+    // 设置遮罩层样式
+    modalBackdrop.style.position = 'fixed';
+    modalBackdrop.style.top = '0';
+    modalBackdrop.style.left = '0';
+    modalBackdrop.style.width = '100vw';
+    modalBackdrop.style.height = '100vh';
+    modalBackdrop.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    modalBackdrop.style.zIndex = '999';
+
     rewardedCharacters.forEach(characterName => {
         const character = people_descriptions.find(p => p[0] === characterName);
         if (character) {
             const div = document.createElement('div');
             div.className = 'reward-item';
+            div.style.textAlign = 'center';
             div.innerHTML = `
                 <div class="character-card">
-                    <div class="character-image">
-                        <img src="resources/人物/${character[0]}.png" alt="${character[0]}">
-                    </div>
-                    <div class="character-info">
-                        <h3 class="name">${character[0]}</h3>
-                        <div class="title">${character[1]}</div>
-                        <div class="description">${character[2]}</div>
-                        <div class="story">${character[3]}</div>
-                        <div class="history">${character[4]}</div>
-                    </div>
+                    <img src="resources/人物/${character[0]}.png" alt="${character[0]}" 
+                         style="width: 100%; height: auto; border-radius: 8px;">
+                    <h3 style="margin: 10px 0; font-size: 16px;">${character[0]}</h3>
                 </div>
             `;
             rewardsContainer.appendChild(div);
         }
     });
-    
+
+    rewardsModal.appendChild(rewardsContainer);
     modalBackdrop.style.display = 'block';
     rewardsModal.style.display = 'block';
 }
