@@ -37,41 +37,43 @@ async function showCelebration(selectedPerson) {
     const characterImg = document.getElementById('character-image');
     const backgroundImg = document.getElementById('background-image');
     
-    console.log(selectedPerson);
+    // 先显示弹窗
+    modal.style.display = 'block';
     
-    // 设置图片路径
-    characterImg.src = `resources/人物/${selectedPerson[0]}.png`;
-    backgroundImg.src = 'resources/background.jpg';
+    // 设置人物基本信息
+    document.getElementById('char-name').textContent = selectedPerson[0] || '';
+    document.getElementById('char-subname').textContent = selectedPerson[1] || '';
+    document.getElementById('char-brief').textContent = selectedPerson[2] || '';
+    document.getElementById('char-story').innerHTML = `
+        <span class="story-bg">演</span>${selectedPerson[3] || '暂无数据'}
+    `;
+    document.getElementById('char-history').innerHTML = `
+        <span class="history-bg">史</span>${selectedPerson[4] || '暂无数据'}
+    `;
 
     try {
-        await Promise.all([
-            new Promise((resolve, reject) => {
-                characterImg.onload = resolve;
-                characterImg.onerror = reject;
+        // 预加载图片
+        const [characterImgLoaded, backgroundImgLoaded] = await Promise.all([
+            new Promise((resolve) => {
+                const img = new Image();
+                img.onload = () => {
+                    characterImg.src = img.src;
+                    resolve();
+                };
+                img.src = `resources/人物/${selectedPerson[0]}.png`;
             }),
-            new Promise((resolve, reject) => {
-                backgroundImg.onload = resolve;
-                backgroundImg.onerror = reject;
+            new Promise((resolve) => {
+                const img = new Image();
+                img.onload = () => {
+                    backgroundImg.src = img.src;
+                    resolve();
+                };
+                img.src = 'resources/background.jpg';
             })
         ]);
-
-        // 设置人物信息
-        document.getElementById('char-name').textContent = selectedPerson[0] || '';
-        document.getElementById('char-subname').textContent = selectedPerson[1] || '';
-        document.getElementById('char-brief').textContent = selectedPerson[2] || '';
-        
-        document.getElementById('char-story').innerHTML = `
-            <span class="story-bg">演</span>${selectedPerson[3] || '暂无数据'}
-        `;
-        document.getElementById('char-history').innerHTML = `
-            <span class="history-bg">史</span>${selectedPerson[4] || '暂无数据'}
-        `;
-        
     } catch (error) {
         console.error('加载人物信息失败:', error);
     }
-    
-    modal.style.display = 'block';
 }
 
 // 关闭慶祝弹窗
